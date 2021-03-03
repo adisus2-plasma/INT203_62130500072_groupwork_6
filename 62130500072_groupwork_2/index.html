@@ -18,18 +18,22 @@
   <!-- Vue CDN -->
   <script src="https://unpkg.com/vue@next"></script>
 
+  <!-- Validate -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+
 </head>
 
 <body>
   <div id="app" class="p-8">
-    <div class="h-screen bg-gray-300">
-      <div class="container flex justify-center py-20">
-        <div class="p-3 bg-white rounded-xl max-w-lg hover:shadow">
-          <div class="flex justify-between w-full"> <img v-bind:src = "image" width="150" class="rounded-lg">
+    <div class="container w-2/5 p-8 mx-auto mt-10 border rounded-lg">
+      <h1 class="text-2xl pt-4 pb-4">Registration Form</h1>
+      <div class="container flex justify-start">
+        <div class="p-3 bg-white rounded-xl max-w-lg">
+          <div class="flex justify-between w-full"> <img v-bind:src="image" width="150" class="rounded-lg">
             <div class="ml-2">
 
               <div class="p-3">
-                <h3 class="text-2xl">{{firstname}} {{lastname}}</h3> <span>{{status}}</span>
+                <h3 class="text-2xl">{{showfirstname}} {{showlastname}}</h3> <span>{{status}}</span>
               </div>
 
               <div class="flex justify-between items-center p-3 bg-gray-200 rounded-lg">
@@ -42,14 +46,74 @@
               </div>
             </div>
           </div>
-          <div class="flex justify-between items-center mt-2 gap-2"> <button
-              class="w-full h-12 rounded-md border-2 text-md hover:shadow hover:bg-red-700 hover:border-red-700 hover:text-white ">Chat</button>
-            <button
-              class="w-full h-12 rounded-md bg-blue-700 text-white text-md hover:shadow hover:bg-blue-800">Chat</button>
-          </div>
         </div>
       </div>
+
+
+      <form @submit.prevent="checkForm">
+
+        <p v-if="errors" class="text-red-500">
+          <b>Please correct the following error(s):</b>
+        <ul>
+          <li v-for="error in errors" class="text-red-500">{{error}}</li>
+        </ul>
+        </p>
+        <label for="myfile">Select a file:</label>
+          <input type="file" id="myfile" name="myfile"><br>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="flex flex-col">
+            <label for="username" class="text-sm leading-7 text-gray-600">Username</label>
+            <input type="text" id="username" v-model="username" name="username"
+              class="bg-gray-100 rounded px-4 py-2 mb-4">
+          </div><br>
+          <div class="flex flex-col">
+            <label for="email" class="text-sm leading-7 text-gray-600">Email</label>
+            <input type="text" id="email" v-model="email" name="email" class="bg-gray-100 rounded px-4 py-2 mb-4">
+          </div><br>
+          <div class="flex flex-col">
+            <label for="password" class="text-sm leading-7 text-gray-600">Password</label>
+            <input type="password" id="password" v-model="password" name="password"
+              class="bg-gray-100 rounded px-4 py-2 mb-4">
+          </div><br>
+          <div class="flex flex-col">
+            <label for="username" class="text-sm leading-7 text-gray-600">Fullname</label>
+            <input type="text" id="fullname" v-model="fullname" name="fullname"
+              class="bg-gray-100 rounded px-4 py-2 mb-4">
+          </div><br>
+          <div class="flex flex-col">
+            <label for="age" class="text-sm leading-7 text-gray-600">Age</label>
+            <input type="text" id="age" v-model="age" name="age" class="bg-gray-100 rounded px-4 py-2 mb-4">
+          </div><br>
+          <div class="flex flex-col">
+            <label class="text-sm leading-7 text-gray-600">Gender</label>
+            <div class="flex flex-row pt-2 space-x-2">
+              <input type="radio" id="Male" v-model="gender" name="gender" value="M"
+                class="bg-gray-100 rounded px-4 py-2 mb-4">
+              <label for="Male">Male</label>
+              <input type="radio" id="Female" v-model="gender" name="gender" value="F"
+                class="bg-gray-100 rounded px-4 py-2 mb-4">
+              <label for="Female">Female</label>
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <label for="phone" class="text-sm leading-7 text-gray-600">Phone Number</label>
+            <input type="text" id="phone" v-model="phone" name="phone" class="bg-gray-100 rounded px-4 py-2 mb-4">
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label for="chosensubject" class="text-sm leading-7 text-gray-600">Subject</label>
+            <select id="chosensubject" v-model="chosensubject" name="chosensubject"
+              class="bg-gray-100 rounded px-4 py-2 mb-4">
+              <option v-for="subject in subject_lists" :value="subject.subject_id">
+                {{subject.subject_name}}
+              </option>
+          </div>
+          <div>
+            <input type="submit" value="Submit"
+              class="px-8 py-2 text-white bg-red-800 rounded-lg hover:bg-green-600 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
+          </div>
+        </div>
     </div>
+    </form>
   </div>
 
   <!-- my main.js -->
